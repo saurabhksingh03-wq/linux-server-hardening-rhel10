@@ -1,0 +1,17 @@
+                 Internet
+                     │
+                     ▼
+          AWS Security Group
+                     │
+                     ▼
+             Firewalld (Linux)
+                     │
+      ┌──────────────┴──────────────┐
+      │                             │
+     SSH                         HTTP/HTTPS
+      │                             │
+      ▼                             ▼
+ Role-Based Users          Applications
+      │
+      ▼
+ Logging & Auditing
