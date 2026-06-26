@@ -1,0 +1,264 @@
+# Linux Server Hardening & Security Optimization
+
+## Author
+
+Saurabh Singh
+
+## Project Number
+
+Project 01
+
+## Environment
+
+* Cloud Platform: AWS EC2
+* Operating System: Red Hat Enterprise Linux (RHEL 10)
+* Package Manager: DNF
+* Firewall: Firewalld
+* SSH Service: OpenSSH
+* User Management: Linux Local Users
+* Logging: systemd-journald
+
+---
+
+# 1. Objective
+
+The objective of this project was to harden a newly provisioned Linux server by implementing production-grade security best practices. The project focused on minimizing the server's attack surface, implementing secure user access controls, configuring firewall rules, enforcing password policies, securing SSH access, and validating the server through logging and auditing.
+
+---
+
+# 2. Project Scope
+
+The following security controls were implemented:
+
+* Server Preparation
+* User & Group Management
+* Sudo Privilege Management
+* SSH Hardening
+* Firewall Configuration
+* Password Policies
+* File Permission Management
+* Logging & Auditing
+* Final Security Validation
+
+---
+
+# 3. Architecture
+
+Internet
+│
+▼
+AWS Security Group
+│
+▼
+Firewalld
+│
+▼
+RHEL 10 Server
+│
+┌──────┼───────────────┐
+│      │               │
+▼      ▼               ▼
+SSH    HTTP          HTTPS
+│
+▼
+Role Based Users
+│
+▼
+Logging & Auditing
+
+---
+
+# 4. Project Implementation
+
+## Phase 1 – Server Preparation
+
+Tasks Performed
+
+* Updated server packages
+* Configured hostname
+* Configured timezone
+* Installed administration utilities
+
+Verification
+
+* hostnamectl
+* timedatectl
+* dnf history
+
+---
+
+## Phase 2 – User & Group Management
+
+Created Groups
+
+* devops
+* developers
+* auditors
+
+Created Users
+
+* devopsadmin
+* developer
+* readonly
+
+Verification
+
+* id
+* groups
+* /etc/passwd
+* /etc/group
+
+---
+
+## Phase 3 – Sudo Configuration
+
+Implemented Principle of Least Privilege.
+
+Administrative privileges were granted only to the devopsadmin account through the wheel group.
+
+Developer and Readonly users were intentionally restricted from using sudo.
+
+Verification
+
+* sudo -l
+* id username
+
+---
+
+## Phase 4 – SSH Hardening
+
+Security Controls
+
+* Disabled Root Login
+* Disabled Empty Passwords
+* Limited Authentication Attempts
+* Configured Idle Session Timeout
+* Validated SSH Configuration
+
+Verification
+
+* sshd -t
+* systemctl status sshd
+
+---
+
+## Phase 5 – Firewall Configuration
+
+Configured Firewalld to allow only
+
+* SSH
+* HTTP
+* HTTPS
+
+All unnecessary services remained blocked.
+
+Verification
+
+* firewall-cmd --list-all
+
+---
+
+## Phase 6 – Password Policy
+
+Implemented
+
+* Maximum Password Age
+* Minimum Password Age
+* Password Warning
+* Account Lockout
+
+Verification
+
+* chage -l username
+
+---
+
+## Phase 7 – File Permissions
+
+Configured
+
+* chmod
+* chown
+* chgrp
+
+Verified ownership and permissions for sensitive files.
+
+---
+
+## Phase 8 – Logging & Auditing
+
+Verified
+
+* Login History
+* Failed Login Attempts
+* SSH Logs
+* System Logs
+* Service Logs
+
+Commands
+
+* journalctl
+* last
+* lastb
+* who
+* w
+* uptime
+
+---
+
+## Phase 9 – Security Audit
+
+Validated
+
+* Hostname
+* Firewall
+* SSH Configuration
+* Password Policies
+* User Accounts
+* File Permissions
+* Logging
+* Sudo Access
+
+All validations passed successfully.
+
+---
+
+# 5. Key Learnings
+
+* Linux User Administration
+* Role Based Access Control
+* SSH Hardening
+* Linux Firewall Management
+* Password Aging Policies
+* Linux File Permissions
+* Linux Logging
+* Security Auditing
+* Linux Troubleshooting
+
+---
+
+# 6. Challenges Faced
+
+* Understanding Linux permission model
+* Configuring Firewalld
+* Validating SSH configuration before restart
+* Managing least-privilege access
+* Understanding journald logging
+
+---
+
+# 7. Best Practices Followed
+
+* Never login directly as root.
+* Always validate SSH configuration before restarting the SSH service.
+* Follow the Principle of Least Privilege.
+* Keep only required firewall ports open.
+* Use password expiration policies.
+* Review logs regularly.
+* Backup configuration files before modification.
+
+---
+
+# 8. Conclusion
+
+The project successfully demonstrated production-level Linux server hardening techniques. Security controls were implemented across user management, SSH, firewall configuration, password policies, file permissions, and system auditing. The server was validated using multiple verification methods to ensure compliance with Linux security best practices.
